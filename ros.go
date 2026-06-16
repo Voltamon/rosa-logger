@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 
@@ -8,7 +9,7 @@ import (
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 )
 
-func ros() {
+func Ros() {
   args, _, err := rclgo.ParseArgs(os.Args[1:])
   if err != nil {
     log.Fatalf("Failed to parse args: %s", err.Error())
@@ -32,4 +33,12 @@ func ros() {
       return
     }
   })
+
+  if err != nil {
+    log.Fatalf("Failed to create subscription: %s", err.Error())
+  }
+
+  if err = rclgo.Spin(context.Background()); err != nil {
+    log.Fatalf("Failed to spin: %s", err.Error())
+  }
 }

@@ -4,7 +4,6 @@ go 1.26.3
 
 require (
 	github.com/tiiuae/rclgo v0.0.0-20260225085354-508dd42245da
-	github.com/tiiuae/rclgo-msgs v0.0.0-20220701121459-d4756ce1bf29
 	google.golang.org/grpc v1.81.1
 	google.golang.org/protobuf v1.36.11
 )
