@@ -25,13 +25,16 @@ func Ros() {
     log.Fatalf("Failed to create node: %s", err.Error())
   }
 
-  _, err = node.NewSubscription("/topic",std_msgs.StringTypeSupport, nil, func (sub *rclgo.Subscription) {
+  _, err = node.NewSubscription("/chatter",std_msgs.StringTypeSupport, nil, func (sub *rclgo.Subscription) {
     var msg std_msgs.String
+
     _, err = sub.TakeMessage(&msg)
     if err != nil {
       log.Printf("Failed to take message: %s", err.Error())
       return
     }
+
+    log.Printf("%s", msg.Data)
   })
 
   if err != nil {
