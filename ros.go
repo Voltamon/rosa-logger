@@ -5,8 +5,11 @@ import (
 	"log"
 	"os"
 
+	geometry_msgs "github.com/Voltamon/ros-router/msgs/geometry_msgs/msg"
 	std_msgs "github.com/Voltamon/ros-router/msgs/std_msgs/msg"
+
 	"github.com/tiiuae/rclgo/pkg/rclgo"
+	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 )
 
 func Ros() {
@@ -25,17 +28,28 @@ func Ros() {
     log.Fatalf("Failed to create node: %s", err.Error())
   }
 
-  _, err = node.NewSubscription("/chatter",std_msgs.StringTypeSupport, nil, func (sub *rclgo.Subscription) {
-    var msg std_msgs.String
+  topicsToTrack := []struct {
+    Name string
+    TypeSupport types.MessageTypeSupport
+  }{
+    {"/chatter", std_msgs.StringTypeSupport},
+    {"/cmd_vel", geometry_msgs.TwistTypeSupport},
+  }
 
-    _, err = sub.TakeMessage(&msg)
-    if err != nil {
-      log.Printf("Failed to take message: %s", err.Error())
-      return
-    }
+  for _, config := range topicsToTrack {
+    topicName := config.Name
+    typeSupport := config.TypeSupport
 
-    log.Printf("%s", msg.Data)
-  })
+    _, err = node.NewSubscription(topicName, typeSupport, nil, func (sub *rclgo.Subscription) {
+      msg := typeSupport.New()
+      _, err := sub.TakeMessage(msg)
+
+      if err != nil {
+        log.Printf("Failed to take message from topic %s: %s", topicName, err.Error())
+      }
+      log.Printf("%s", msg)
+    })
+  }
 
   if err != nil {
     log.Fatalf("Failed to create subscription: %s", err.Error())
