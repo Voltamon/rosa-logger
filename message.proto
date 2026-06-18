@@ -1,0 +1,17 @@
+syntax = "proto3";
+option go_package = "./buffer";
+
+package logger;
+
+message LogStreamRequest {}
+
+message LogStream {
+  string timestamp = 1;
+  string level = 2;
+  string source = 3;
+  string payload = 4;
+}
+
+service LogService {
+  rpc StreamLogs (LogStreamRequest) returns (stream LogStream);
+}
