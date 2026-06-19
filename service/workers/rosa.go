@@ -10,7 +10,6 @@ import (
 	std_msgs "github.com/Voltamon/ros-router/msgs/std_msgs/msg"
 
 	"github.com/tiiuae/rclgo/pkg/rclgo"
-	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 )
 
 func StartRosWorker(ctx context.Context, args *rclgo.Args, logChan chan <- data.LogMessage) error {
@@ -24,10 +23,7 @@ func StartRosWorker(ctx context.Context, args *rclgo.Args, logChan chan <- data.
         return fmt.Errorf("Failed to create node: %s", err.Error())
     }
 
-    topicsToTrack := []struct {
-        Name string
-        TypeSupport types.MessageTypeSupport
-    }{
+    topicsToTrack := []data.TopicConfig{
     {"/chatter", std_msgs.StringTypeSupport},
     {"/cmd_vel", geometry_msgs.TwistTypeSupport},
     }

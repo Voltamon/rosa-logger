@@ -1,6 +1,10 @@
 package data
 
-import "time"
+import (
+	"time"
+
+	"github.com/tiiuae/rclgo/pkg/rclgo/types"
+)
 type LogLevel string
 
 const (
@@ -14,4 +18,9 @@ type LogMessage struct {
     Level     LogLevel
     Source    string
     Payload   string
+}
+
+type TopicConfig struct {
+    Name string
+    TypeSupport types.MessageTypeSupport
 }

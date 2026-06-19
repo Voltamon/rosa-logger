@@ -38,6 +38,16 @@ func main() {
     go func() {
         defer waitGroup.Done()
 
+        err := worker.StartDockWorker(ctx, "blissful_brattain", logStream)
+        if err != nil {
+            log.Fatalf("Docker Worker error: %s", err.Error())
+        }
+    }()
+
+    waitGroup.Add(1)
+    go func() {
+        defer waitGroup.Done()
+
         err := service.StartGRPCServer(":50051", logStream)
         if err != nil {
             log.Fatalf("gRPC Server error: %s", err.Error())
