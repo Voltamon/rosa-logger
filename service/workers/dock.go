@@ -23,7 +23,7 @@ func (cw *ChannelWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
-func StartDockWorker(ctx context.Context, containerName string, logStream chan<- data.LogMessage) error {
+func StartDockWorker(ctx context.Context, containerName []string, logStream chan<- data.LogMessage) error {
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
 		return fmt.Errorf("failed to create Docker client: %w", err)
@@ -38,7 +38,7 @@ func StartDockWorker(ctx context.Context, containerName string, logStream chan<-
 		ShowStderr: true,
 	}
 
-	containerData, err := cli.ContainerInspect(ctx, containerName, client.ContainerInspectOptions{})
+	containerData, err := cli.ContainerInspect(ctx, containerName[0], client.ContainerInspectOptions{})
 	if err != nil {
 		return fmt.Errorf("failed to inspect container: %w", err)
 	}

@@ -10,8 +10,11 @@ import (
 
 	"github.com/Voltamon/ros-router/data"
 	"github.com/Voltamon/ros-router/service"
-	worker "github.com/Voltamon/ros-router/service/workers"
 	"github.com/tiiuae/rclgo/pkg/rclgo"
+
+	geometry_msgs "github.com/Voltamon/ros-router/msgs/geometry_msgs/msg"
+	std_msgs "github.com/Voltamon/ros-router/msgs/std_msgs/msg"
+	worker "github.com/Voltamon/ros-router/service/workers"
 )
 
 func main() {
@@ -28,21 +31,26 @@ func main() {
     go func() {
         defer waitGroup.Done()
 
-        err := worker.StartRosWorker(ctx, args, logStream)
+        topicsToTrack := []data.TopicConfig{
+{"/chatter", std_msgs.StringTypeSupport},
+{"/cmd_vel", geometry_msgs.TwistTypeSupport},
+        }
+
+        err := worker.StartRosWorker(ctx, args, topicsToTrack, logStream)
         if err != nil {
             log.Fatalf("ROS Worker error: %s", err.Error())
         }
     }()
 
-    waitGroup.Add(1)
-    go func() {
-        defer waitGroup.Done()
+    // waitGroup.Add(1)
+    // go func() {
+    //     defer waitGroup.Done()
 
-        err := worker.StartDockWorker(ctx, "blissful_brattain", logStream)
-        if err != nil {
-            log.Fatalf("Docker Worker error: %s", err.Error())
-        }
-    }()
+    //     err := worker.StartDockWorker(ctx, []string{"blissful_brattain"}, logStream)
+    //     if err != nil {
+    //         log.Fatalf("Docker Worker error: %s", err.Error())
+    //     }
+    // }()
 
     waitGroup.Add(1)
     go func() {

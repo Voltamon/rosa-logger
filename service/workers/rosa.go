@@ -6,13 +6,10 @@ import (
 	"log"
 
 	"github.com/Voltamon/ros-router/data"
-	geometry_msgs "github.com/Voltamon/ros-router/msgs/geometry_msgs/msg"
-	std_msgs "github.com/Voltamon/ros-router/msgs/std_msgs/msg"
-
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 )
 
-func StartRosWorker(ctx context.Context, args *rclgo.Args, logChan chan <- data.LogMessage) error {
+func StartRosWorker(ctx context.Context, args *rclgo.Args, topicsToTrack []data.TopicConfig, logChan chan <- data.LogMessage) error {
     if err := rclgo.Init(args); err != nil {
         fmt.Errorf("Failed to initialize ROS 2: %s", err.Error())
     }
@@ -21,11 +18,6 @@ func StartRosWorker(ctx context.Context, args *rclgo.Args, logChan chan <- data.
     node, err := rclgo.NewNode("middleware_logger", "default")
     if err != nil {
         return fmt.Errorf("Failed to create node: %s", err.Error())
-    }
-
-    topicsToTrack := []data.TopicConfig{
-    {"/chatter", std_msgs.StringTypeSupport},
-    {"/cmd_vel", geometry_msgs.TwistTypeSupport},
     }
 
     for _, config := range topicsToTrack {
