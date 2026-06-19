@@ -3,7 +3,7 @@ package worker
 import (
 	"context"
 
-	"github.com/Voltamon/ros-router/data"
+	"github.com/Voltamon/logr/data"
 )
 
 func StartYoloWorker(ctx context.Context, cameraID string, logChan chan<- data.LogMessage) error {

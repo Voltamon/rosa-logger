@@ -7,9 +7,9 @@ import (
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	geometry_msgs_msg "github.com/Voltamon/ros-router/msgs/geometry_msgs/msg"
-	tf2_msgs_msg "github.com/Voltamon/ros-router/msgs/tf2_msgs/msg"
-	
+	geometry_msgs_msg "github.com/Voltamon/logr/msgs/geometry_msgs/msg"
+	tf2_msgs_msg "github.com/Voltamon/logr/msgs/tf2_msgs/msg"
+
 )
 /*
 #include <rosidl_runtime_c/message_type_support_struct.h>

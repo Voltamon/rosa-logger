@@ -5,8 +5,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/Voltamon/ros-router/buffer"
-	"github.com/Voltamon/ros-router/data"
+	"github.com/Voltamon/logr/buffer"
+	"github.com/Voltamon/logr/data"
 	"google.golang.org/grpc"
 )
 

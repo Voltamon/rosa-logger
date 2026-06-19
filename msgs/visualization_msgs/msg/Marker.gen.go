@@ -7,12 +7,12 @@ import (
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	builtin_interfaces_msg "github.com/Voltamon/ros-router/msgs/builtin_interfaces/msg"
-	geometry_msgs_msg "github.com/Voltamon/ros-router/msgs/geometry_msgs/msg"
-	sensor_msgs_msg "github.com/Voltamon/ros-router/msgs/sensor_msgs/msg"
-	std_msgs_msg "github.com/Voltamon/ros-router/msgs/std_msgs/msg"
+	builtin_interfaces_msg "github.com/Voltamon/logr/msgs/builtin_interfaces/msg"
+	geometry_msgs_msg "github.com/Voltamon/logr/msgs/geometry_msgs/msg"
+	sensor_msgs_msg "github.com/Voltamon/logr/msgs/sensor_msgs/msg"
+	std_msgs_msg "github.com/Voltamon/logr/msgs/std_msgs/msg"
 	primitives "github.com/tiiuae/rclgo/pkg/rclgo/primitives"
-	
+
 )
 /*
 #include <rosidl_runtime_c/message_type_support_struct.h>

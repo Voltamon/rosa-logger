@@ -7,9 +7,9 @@ import (
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	type_description_interfaces_msg "github.com/Voltamon/ros-router/msgs/type_description_interfaces/msg"
+	type_description_interfaces_msg "github.com/Voltamon/logr/msgs/type_description_interfaces/msg"
 	primitives "github.com/tiiuae/rclgo/pkg/rclgo/primitives"
-	
+
 )
 /*
 #include <rosidl_runtime_c/message_type_support_struct.h>

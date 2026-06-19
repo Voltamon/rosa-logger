@@ -7,9 +7,9 @@ import (
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	builtin_interfaces_msg "github.com/Voltamon/ros-router/msgs/builtin_interfaces/msg"
-	unique_identifier_msgs_msg "github.com/Voltamon/ros-router/msgs/unique_identifier_msgs/msg"
-	
+	builtin_interfaces_msg "github.com/Voltamon/logr/msgs/builtin_interfaces/msg"
+	unique_identifier_msgs_msg "github.com/Voltamon/logr/msgs/unique_identifier_msgs/msg"
+
 )
 /*
 #include <rosidl_runtime_c/message_type_support_struct.h>

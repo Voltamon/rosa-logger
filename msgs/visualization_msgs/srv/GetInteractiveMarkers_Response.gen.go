@@ -7,8 +7,8 @@ import (
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	visualization_msgs_msg "github.com/Voltamon/ros-router/msgs/visualization_msgs/msg"
-	
+	visualization_msgs_msg "github.com/Voltamon/logr/msgs/visualization_msgs/msg"
+
 )
 /*
 #include <rosidl_runtime_c/message_type_support_struct.h>

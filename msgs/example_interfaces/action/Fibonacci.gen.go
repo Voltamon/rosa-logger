@@ -17,8 +17,8 @@ import (
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 
-	action_msgs_msg "github.com/Voltamon/ros-router/msgs/action_msgs/msg"
-	action_msgs_srv "github.com/Voltamon/ros-router/msgs/action_msgs/srv"
+	action_msgs_msg "github.com/Voltamon/logr/msgs/action_msgs/msg"
+	action_msgs_srv "github.com/Voltamon/logr/msgs/action_msgs/srv"
 )
 
 func init() {

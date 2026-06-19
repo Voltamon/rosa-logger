@@ -8,13 +8,13 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/Voltamon/ros-router/data"
-	"github.com/Voltamon/ros-router/service"
+	"github.com/Voltamon/logr/data"
+	"github.com/Voltamon/logr/service"
 	"github.com/tiiuae/rclgo/pkg/rclgo"
 
-	geometry_msgs "github.com/Voltamon/ros-router/msgs/geometry_msgs/msg"
-	std_msgs "github.com/Voltamon/ros-router/msgs/std_msgs/msg"
-	worker "github.com/Voltamon/ros-router/service/workers"
+	geometry_msgs "github.com/Voltamon/logr/msgs/geometry_msgs/msg"
+	std_msgs "github.com/Voltamon/logr/msgs/std_msgs/msg"
+	worker "github.com/Voltamon/logr/service/workers"
 )
 
 func main() {

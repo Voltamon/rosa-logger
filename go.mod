@@ -1,4 +1,4 @@
-module github.com/Voltamon/ros-router
+module github.com/Voltamon/logr
 
 go 1.26.4
 
