@@ -32,8 +32,8 @@ func main() {
         defer waitGroup.Done()
 
         topicsToTrack := []data.TopicConfig{
-{"/chatter", std_msgs.StringTypeSupport},
-{"/cmd_vel", geometry_msgs.TwistTypeSupport},
+            {Name: "/chatter", TypeSupport: std_msgs.StringTypeSupport},
+            {Name: "/cmd_vel", TypeSupport: geometry_msgs.TwistTypeSupport},
         }
 
         err := worker.StartRosWorker(ctx, args, topicsToTrack, logStream)

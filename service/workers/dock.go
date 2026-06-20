@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"sync"
 
 	"github.com/Voltamon/logr/data"
 
@@ -30,42 +31,65 @@ func StartDockWorker(ctx context.Context, containerName []string, logStream chan
 	}
 	defer cli.Close()
 
-	logOpts := client.ContainerLogsOptions{
-		Timestamps: false,
-		Tail: "5",
-		Follow:     true,
-		ShowStdout: true,
-		ShowStderr: true,
+	var waitGrp sync.WaitGroup
+	errChan := make(chan error, len(containerName))
+
+	for _, containerName := range containerName {
+        waitGrp.Add(1)
+
+        go func(containerName string) (error) {
+            defer waitGrp.Done()
+
+            logOpts := client.ContainerLogsOptions{
+          		Timestamps: false,
+          		Tail:       "5",
+          		Follow:     true,
+          		ShowStdout: true,
+          		ShowStderr: true,
+           	}
+
+           	containerData, err := cli.ContainerInspect(ctx, containerName, client.ContainerInspectOptions{})
+           	if err != nil {
+          		errChan <- fmt.Errorf("failed to inspect container: %w", err)
+           	}
+           	containerID := containerData.Container.ID
+
+           	stream, err := cli.ContainerLogs(ctx, containerID, logOpts)
+           	if err != nil {
+          		errChan <- fmt.Errorf("failed to get container logs: %w", err)
+           	}
+           	defer stream.Close()
+
+           	stdoutWriter := &ChannelWriter{
+           	    containerID: containerID,
+          		level:       data.LevelInfo,
+          		logChan:     logStream,
+           	}
+
+           	stderrWriter := &ChannelWriter{
+           	    containerID: containerID,
+          		level:       data.LevelError,
+          		logChan:     logStream,
+           	}
+
+           	_, err = stdcopy.StdCopy(stdoutWriter, stderrWriter, stream)
+           	if err != nil && err != io.EOF {
+          		errChan <- fmt.Errorf("docker log stream error: %w", err)
+           	}
+
+            return nil
+        }(containerName)
 	}
 
-	containerData, err := cli.ContainerInspect(ctx, containerName[0], client.ContainerInspectOptions{})
-	if err != nil {
-		return fmt.Errorf("failed to inspect container: %w", err)
-	}
-	containerID := containerData.Container.ID
+	go func() {
+	    waitGrp.Wait()
+		close(errChan)
+	}()
 
-	stream, err := cli.ContainerLogs(ctx, containerID, logOpts)
-	if err != nil {
-		return fmt.Errorf("failed to get container logs: %w", err)
-	}
-	defer stream.Close()
-
-	stdoutWriter := &ChannelWriter{
-	    containerID:    containerID,
-		level:          data.LevelInfo,
-		logChan:        logStream,
-	}
-
-	stderrWriter := &ChannelWriter{
-	    containerID: containerID,
-		level: data.LevelError,
-		logChan: logStream,
-	}
-
-	_, err = stdcopy.StdCopy(stdoutWriter, stderrWriter, stream)
-	if err != nil && err != io.EOF {
-		return fmt.Errorf("docker log stream error: %w", err)
-	}
-
+    for err := range errChan {
+        if err != nil {
+            return err
+        }
+    }
 	return nil
 }
